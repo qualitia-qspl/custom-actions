@@ -4,6 +4,7 @@ import com.qualitia.execution.ApplicationLogger;
 import com.qualitia.execution.failureclassifications.FailureCategories;
 import com.webdriverfw.Wrappers.General;
 
+//for testsss
 public class AutoITUploadFile extends General {
 
     public ActionResponse AutoITUploadFile(String ExecutablePath, String UploadFile) {
