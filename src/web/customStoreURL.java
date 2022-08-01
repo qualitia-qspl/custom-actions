@@ -1,3 +1,5 @@
+package web;
+
 import com.qualitia.constants.ExecutionResult;
 import com.qualitia.execution.ActionResponse;
 import com.qualitia.execution.failureclassifications.FailureCategories;
