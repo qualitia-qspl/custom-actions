@@ -1,52 +1,39 @@
-package web; /**
-* Recommendations and Rules for Custom Actions
-* 1. The parameter data types supported are String and Array. 
-* 2. All custom actions must return following integer values only.
-*    a. If action gets passed, return value should be 0.
-*    b. If action gets failed, return value should be 1.
-*    c. If action has defect, return value should be 2.
-*/
-
-
+package web;
 
 import com.qualitia.constants.ExecutionResult;
 import com.qualitia.execution.ActionResponse;
-import com.qualitia.execution.ApplicationLogger;
-import com.qualitia.execution.failureclassifications.FailureCategories;
 import com.webdriverfw.Wrappers.General;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 public class CustomScroll extends General {
-	
-	public ActionResponse CustomScroll(String whereto) {
-		ActionResponse actionResponse = getActionResponse();
-		ApplicationLogger applicationLogger = actionResponse.getApplicationLogger();
-		actionResponse.setExecutionResult(ExecutionResult.FAILED);
 
-		try {
-				applicationLogger.writeToInfoLog("Entered");
-				WebDriver driver = null;
-				driver = getWebDriver();
-				if(whereto=="top") {
-					((JavascriptExecutor) driver)
-					.executeScript("window.scrollTo(document.body.scrollHeight, 0)");
-				}
-				else if(whereto=="end") {
-					((JavascriptExecutor) driver)
-					.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-				}
-				else {
-					((JavascriptExecutor) driver)
-					.executeScript("window.scrollBy("+whereto+")");
-				}
-				actionResponse.setExecutionResult(ExecutionResult.PASSED);
-				actionResponse.setMessage("Action executed successfully");
-			} catch(Exception ex) {
-				actionResponse.setMessage("Exception occurred : " + ex.getMessage(), FailureCategories.Category.ACTION_FAILURE);
-				applicationLogger.writeToErrorLog(ex);
-				ex.printStackTrace();
-			}
-		return actionResponse;
-	}
+    /**
+     * This action will scroll the webpage according to the given parameter i.e. option
+     *
+     * @param option
+     * @return
+     */
+    public ActionResponse CustomScroll(String option) {
+        ActionResponse actionResponse = getActionResponse();
+
+        // use scrollTo method for scrolling to top and bottom
+        WebDriver driver = getWebDriver();
+        if (option.equalsIgnoreCase("top")) {
+            ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0)");
+        } else if (option.equalsIgnoreCase("bottom")) {
+            ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        } else {
+            /* use scrollBy method for other custom options
+                Option includes "top", "left" and "behaviour" parameters
+                used to scroll at any point on page
+                Example : window.scrollBy({top: 100, left: 100, behavior: 'smooth'});
+             */
+            ((JavascriptExecutor) driver).executeScript("window.scrollBy({" + option + "})");
+        }
+
+        actionResponse.setExecutionResult(ExecutionResult.PASSED);
+        actionResponse.setMessage("Scrolled successfully");
+        return actionResponse;
+    }
 }
