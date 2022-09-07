@@ -1,4 +1,4 @@
-package web;
+package web.general;
 
 import com.qualitia.constants.ExecutionResult;
 import com.qualitia.execution.ActionResponse;

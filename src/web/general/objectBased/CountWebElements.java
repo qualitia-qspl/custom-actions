@@ -1,4 +1,4 @@
-package web;
+package web.general.objectBased;
 
 import java.util.List;
 import com.helpers.ElementFinderUtil;
@@ -15,22 +15,20 @@ public class CountWebElements extends General {
     /**
      * This action will count the no. of web elements present on page based on the locator type and value given in parameter.
      *
-     * @param locatorValue
-     * @param locatorType
-     * @param countKey
+     * @param locatorValue locator Value of the object
+     * @param locatorType respective locatorType of the locator Value
+     * @param countKey key to store the count of the elements
      * @return
      */
     public ActionResponse CountWebElement(String locatorValue, String locatorType, String countKey) {
         ActionResponse actionResponse = getActionResponse();
         ApplicationLogger applicationLogger = actionResponse.getApplicationLogger();
 
-        WebDriver driver = getWebDriver();
-
         /*
             It uses getWebElements to find elements and store them list
             LocatorType can have : XPATH, LINK, ID, CSS, NAME
          */
-        List<WebElement> webElements = ElementFinderUtil.getWebElements(driver, applicationLogger, locatorValue, locatorType);
+        List<WebElement> webElements = ElementFinderUtil.getWebElements(getWebDriver(), applicationLogger, locatorValue, locatorType);
 
         // Storing count of WebElements
         String elementCount = Integer.toString(webElements.size());
